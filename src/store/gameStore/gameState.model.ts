@@ -21,7 +21,7 @@ export class Flag extends Sprite {}
 
 export class GameState {
   readonly dimensions: [number, number];
-  player: Sprite;
+  player: Player;
   obstacles: Map<`[${number},${number}]`, Obstacle>;
   flags: Map<`[${number},${number}]`, Flag>;
 
