@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { Flag, GameState, Obstacle, Orientation, Player } from '../game.model';
+import { Flag, GameState, Obstacle, Orientation, Player } from '../gameState.model';
 
 describe('GameState - moveForwardPostion', () => {
   describe('when the player is orientated N and at the top edge', () => {
@@ -262,3 +262,16 @@ describe('GameState - rotateCW', () => {
     it.todo('should update game state with player orientated W');
   });
 });
+
+// describe('GameState - generateBoard', () => {
+//   it('should', () => {
+//     const state = new GameState({
+//       dimensions: [10, 10],
+//       player: new Player({ position: [5, 5], orientation: Orientation.N }),
+//       obstacles: new Map<`[${number},${number}]`, Obstacle>([[`[7,8]`, new Obstacle({ position: [7, 8], orientation: Orientation.N })]]),
+//       flags: new Map<`[${number},${number}]`, Flag>([[`[1,2]`, new Flag({ position: [1, 2], orientation: Orientation.N })]])
+//     });
+
+//     console.log(GameState.generateBoard(state));
+//   });
+// });

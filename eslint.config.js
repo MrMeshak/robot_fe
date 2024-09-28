@@ -18,7 +18,8 @@ export default tseslint.config(
       'react-refresh': reactRefresh
     },
     rules: {
-      '@typescript-eslint/interface-name-prefix': 'off',
+      '@typescript-eslint/interface-name-prefix': 'always',
+      '@typescript-eslint/no-empty-interface': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',

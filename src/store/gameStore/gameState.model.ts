@@ -101,6 +101,24 @@ export class GameState {
       .with(Orientation.W, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.S }) }))
       .exhaustive();
   }
+
+  static generateBoard(state: GameState) {
+    const board: Sprite[][] = Array(state.dimensions[1])
+      .fill([])
+      .map(() => Array(state.dimensions[0]).fill(new EmptyCell()));
+
+    state.obstacles.forEach((obstacle) => {
+      board[obstacle.position[1]][obstacle.position[0]] = obstacle;
+    });
+
+    state.flags.forEach((flag) => {
+      board[flag.position[1]][flag.position[0]] = flag;
+    });
+
+    board[state.player.position[1]][state.player.position[0]] = state.player;
+
+    return board;
+  }
 }
 
 export const Orientation = {
