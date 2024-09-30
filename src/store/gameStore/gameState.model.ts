@@ -1,5 +1,5 @@
-import { match } from 'ts-pattern';
-import { mod } from '../../lib/utils';
+import { match } from "ts-pattern";
+import { mod } from "../../lib/utils";
 
 export class EmptyCell {}
 
@@ -25,7 +25,12 @@ export class GameState {
   obstacles: Map<`[${number},${number}]`, Obstacle>;
   flags: Map<`[${number},${number}]`, Flag>;
 
-  constructor(data: { player: Player; dimensions: [number, number]; obstacles: Map<`[${number},${number}]`, Obstacle>; flags: Map<`[${number},${number}]`, Flag> }) {
+  constructor(data: {
+    player: Player;
+    dimensions: [number, number];
+    obstacles: Map<`[${number},${number}]`, Obstacle>;
+    flags: Map<`[${number},${number}]`, Flag>;
+  }) {
     this.player = data.player;
     this.dimensions = data.dimensions;
     this.obstacles = data.obstacles;
@@ -36,10 +41,22 @@ export class GameState {
     const { player } = state;
     return match(player.orientation)
       .returnType<[number, number]>()
-      .with(Orientation.N, () => [player.position[0], mod(player.position[1] + 1, state.dimensions[1])])
-      .with(Orientation.S, () => [player.position[0], mod(player.position[1] - 1, state.dimensions[1])])
-      .with(Orientation.E, () => [mod(player.position[0] + 1, state.dimensions[0]), player.position[1]])
-      .with(Orientation.W, () => [mod(player.position[0] - 1, state.dimensions[0]), player.position[1]])
+      .with(Orientation.N, () => [
+        player.position[0],
+        mod(player.position[1] + 1, state.dimensions[1]),
+      ])
+      .with(Orientation.S, () => [
+        player.position[0],
+        mod(player.position[1] - 1, state.dimensions[1]),
+      ])
+      .with(Orientation.E, () => [
+        mod(player.position[0] + 1, state.dimensions[0]),
+        player.position[1],
+      ])
+      .with(Orientation.W, () => [
+        mod(player.position[0] - 1, state.dimensions[0]),
+        player.position[1],
+      ])
       .exhaustive();
   }
 
@@ -47,10 +64,22 @@ export class GameState {
     const { player } = state;
     return match(player.orientation)
       .returnType<[number, number]>()
-      .with(Orientation.N, () => [player.position[0], mod(player.position[1] - 1, state.dimensions[1])])
-      .with(Orientation.S, () => [player.position[0], mod(player.position[1] + 1, state.dimensions[1])])
-      .with(Orientation.E, () => [mod(player.position[0] - 1, state.dimensions[0]), player.position[1]])
-      .with(Orientation.W, () => [mod(player.position[0] + 1, state.dimensions[0]), player.position[1]])
+      .with(Orientation.N, () => [
+        player.position[0],
+        mod(player.position[1] - 1, state.dimensions[1]),
+      ])
+      .with(Orientation.S, () => [
+        player.position[0],
+        mod(player.position[1] + 1, state.dimensions[1]),
+      ])
+      .with(Orientation.E, () => [
+        mod(player.position[0] - 1, state.dimensions[0]),
+        player.position[1],
+      ])
+      .with(Orientation.W, () => [
+        mod(player.position[0] + 1, state.dimensions[0]),
+        player.position[1],
+      ])
       .exhaustive();
   }
 
@@ -61,12 +90,21 @@ export class GameState {
     }
 
     if (state.flags.has(`[${nextPos[0]},${nextPos[1]}]`)) {
-      const updatedFlags = new Map<`[${number},${number}]`, Flag>([...state.flags]);
+      const updatedFlags = new Map<`[${number},${number}]`, Flag>([
+        ...state.flags,
+      ]);
       updatedFlags.delete(`[${nextPos[0]},${nextPos[1]}]`);
-      return new GameState({ ...state, flags: updatedFlags, player: new Player({ ...state.player, position: nextPos }) });
+      return new GameState({
+        ...state,
+        flags: updatedFlags,
+        player: new Player({ ...state.player, position: nextPos }),
+      });
     }
 
-    return new GameState({ ...state, player: new Player({ ...state.player, position: nextPos }) });
+    return new GameState({
+      ...state,
+      player: new Player({ ...state.player, position: nextPos }),
+    });
   }
 
   static moveBackwards(state: GameState): GameState {
@@ -76,30 +114,116 @@ export class GameState {
     }
 
     if (state.flags.has(`[${nextPos[0]},${nextPos[1]}]`)) {
-      const updatedFlags = new Map<`[${number},${number}]`, Flag>([...state.flags]);
+      const updatedFlags = new Map<`[${number},${number}]`, Flag>([
+        ...state.flags,
+      ]);
       updatedFlags.delete(`[${nextPos[0]},${nextPos[1]}]`);
-      return new GameState({ ...state, flags: updatedFlags, player: new Player({ ...state.player, position: nextPos }) });
+      return new GameState({
+        ...state,
+        flags: updatedFlags,
+        player: new Player({ ...state.player, position: nextPos }),
+      });
     }
 
-    return new GameState({ ...state, player: new Player({ ...state.player, position: nextPos }) });
+    return new GameState({
+      ...state,
+      player: new Player({ ...state.player, position: nextPos }),
+    });
   }
 
   static rotateCW(state: GameState): GameState {
     return match(state.player.orientation)
-      .with(Orientation.N, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.E }) }))
-      .with(Orientation.S, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.W }) }))
-      .with(Orientation.E, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.S }) }))
-      .with(Orientation.W, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.N }) }))
+      .with(
+        Orientation.N,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.E }),
+          }),
+      )
+      .with(
+        Orientation.S,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.W }),
+          }),
+      )
+      .with(
+        Orientation.E,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.S }),
+          }),
+      )
+      .with(
+        Orientation.W,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.N }),
+          }),
+      )
       .exhaustive();
   }
 
   static rotateCCW(state: GameState): GameState {
     return match(state.player.orientation)
-      .with(Orientation.N, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.W }) }))
-      .with(Orientation.S, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.E }) }))
-      .with(Orientation.E, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.N }) }))
-      .with(Orientation.W, () => new GameState({ ...state, player: new Player({ ...state.player, orientation: Orientation.S }) }))
+      .with(
+        Orientation.N,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.W }),
+          }),
+      )
+      .with(
+        Orientation.S,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.E }),
+          }),
+      )
+      .with(
+        Orientation.E,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.N }),
+          }),
+      )
+      .with(
+        Orientation.W,
+        () =>
+          new GameState({
+            ...state,
+            player: new Player({ ...state.player, orientation: Orientation.S }),
+          }),
+      )
       .exhaustive();
+  }
+
+  static rotateOrientation(state: GameState, orientation: Orientation) {
+    if (state.player.orientation === orientation) {
+      return state;
+    }
+    return new GameState({
+      ...state,
+      player: new Player({ ...state.player, orientation: orientation }),
+    });
+  }
+
+  static moveOrientation(
+    state: GameState,
+    orientation: Orientation,
+  ): GameState {
+    if (state.player.orientation === orientation) {
+      return GameState.moveForward(state);
+    }
+
+    return GameState.rotateOrientation(state, orientation);
   }
 
   static generateBoard(state: GameState) {
@@ -122,10 +246,10 @@ export class GameState {
 }
 
 export const Orientation = {
-  N: 'N',
-  S: 'S',
-  E: 'E',
-  W: 'W'
+  N: "N",
+  S: "S",
+  E: "E",
+  W: "W",
 } as const;
 
 export type Orientation = (typeof Orientation)[keyof typeof Orientation];

@@ -1,31 +1,41 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { Flag, GameState, Obstacle, Orientation, Player } from './gameState.model';
+import {
+  Flag,
+  GameState,
+  Obstacle,
+  Orientation,
+  Player,
+} from "./gameState.model";
 
 interface IGameStoreState {
   state: GameState;
   actions: {
-    moveForward: () => void;
-    moveBackward: () => void;
-    rotateCW: () => void;
-    rotateCCW: () => void;
+    moveOrientation: (orientation: Orientation) => void;
   };
 }
 
+const state = new GameState({
+  dimensions: [10, 10],
+  player: new Player({ position: [5, 5], orientation: Orientation.S }),
+  obstacles: new Map<`[${number},${number}]`, Obstacle>([
+    ["[1,2]", new Obstacle({ position: [1, 2], orientation: Orientation.N })],
+  ]),
+  flags: new Map<`[${number},${number}]`, Flag>([
+    [`[7,7]`, new Flag({ position: [7, 7], orientation: Orientation.N })],
+  ]),
+});
+
 const useGameStore = create<IGameStoreState>((set) => ({
-  state: new GameState({
-    dimensions: [10, 10],
-    player: new Player({ position: [10, 10], orientation: Orientation.N }),
-    obstacles: new Map<`[${number},${number}]`, Obstacle>(),
-    flags: new Map<`[${number},${number}]`, Flag>()
-  }),
+  state: state,
   actions: {
-    moveForward: () => {},
-    moveBackward: () => {},
-    rotateCW: () => {},
-    rotateCCW: () => {}
-  }
+    moveOrientation: (orientation: Orientation) =>
+      set((state) => ({
+        state: GameState.moveOrientation(state.state, orientation),
+      })),
+  },
 }));
 
-const useGameActions = () => useGameStore((state) => state.actions);
-const useGameGenerateBoard = () => useGameStore((state) => GameState.generateBoard(state.state));
+export const useGameActions = () => useGameStore((state) => state.actions);
+export const useGameGenerateBoard = () =>
+  GameState.generateBoard(useGameStore((state) => state.state));
