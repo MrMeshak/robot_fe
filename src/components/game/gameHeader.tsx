@@ -1,5 +1,4 @@
 import { useGameMiscData } from "@/store/gameStore/gameStore";
-import * as React from "react";
 
 export interface IGameHeaderProps {}
 

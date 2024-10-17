@@ -1,14 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Orientation } from "@/store/gameStore/gameState.model";
 import { useGameActions } from "@/store/gameStore/gameStore";
-import {
-  MoveDown,
-  MoveLeft,
-  MoveRight,
-  MoveUp,
-  RotateCcw,
-  RotateCw,
-} from "lucide-react";
+import { MoveDown, MoveLeft, MoveRight, MoveUp } from "lucide-react";
 import { useEffect } from "react";
 import { match } from "ts-pattern";
 export interface IGameControlsProps {}

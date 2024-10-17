@@ -2,13 +2,12 @@ import { cn } from "@/lib/utils";
 import {
   EmptyCell,
   Flag,
-  GameState,
   Obstacle,
   Orientation,
   Player,
 } from "@/store/gameStore/gameState.model";
 import { useGameGenerateBoard } from "@/store/gameStore/gameStore";
-import { Square, FlagTriangleRight, Bug, BrickWall } from "lucide-react";
+import { FlagTriangleRight, Bug, BrickWall } from "lucide-react";
 import { match, P } from "ts-pattern";
 
 export interface IGameBoardProps {}
