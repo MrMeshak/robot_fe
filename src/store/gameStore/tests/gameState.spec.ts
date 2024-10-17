@@ -293,13 +293,168 @@ describe("GameState - moveBackward", () => {
 
 describe("GameState - rotateCW", () => {
   describe("when player is orientated N", () => {
-    it.todo("should update game state with player orientated E");
+    it("should update game state with player orientated E", () => {
+      const state = new GameState({
+        dimensions: [10, 10],
+        player: new Player({ position: [5, 5], orientation: Orientation.N }),
+        obstacles: new Map(),
+        flags: new Map(),
+      });
+
+      const result = GameState.rotateCW(state);
+
+      expect(result.player.orientation).toEqual(Orientation.E);
+    });
   });
   describe("when player is orientated S", () => {
-    it.todo("should update game state with player orientated W");
-  });
-});
+    it("should update game state with player orientated W", () => {
+      const state = new GameState({
+        dimensions: [10, 10],
+        player: new Player({ position: [5, 5], orientation: Orientation.S }),
+        obstacles: new Map(),
+        flags: new Map(),
+      });
 
-describe("GameState - moveOrientation", () => {
-  describe("when player is orientated S");
+      const result = GameState.rotateCW(state);
+
+      expect(result.player.orientation).toEqual(Orientation.W);
+    });
+  });
+  describe("when player is orientated E", () => {
+    it("should update game state with player orientated S", () => {
+      const state = new GameState({
+        dimensions: [10, 10],
+        player: new Player({ position: [5, 5], orientation: Orientation.E }),
+        obstacles: new Map(),
+        flags: new Map(),
+      });
+
+      const result = GameState.rotateCW(state);
+
+      expect(result.player.orientation).toEqual(Orientation.S);
+    });
+  });
+  describe("when player is orientated W", () => {
+    it("should update game state with player orientated N", () => {
+      const state = new GameState({
+        dimensions: [10, 10],
+        player: new Player({ position: [5, 5], orientation: Orientation.W }),
+        obstacles: new Map(),
+        flags: new Map(),
+      });
+
+      const result = GameState.rotateCW(state);
+
+      expect(result.player.orientation).toEqual(Orientation.N);
+    });
+  });
+
+  describe("GameState - rotateCCW", () => {
+    describe("when player is orientated N", () => {
+      it("should update game state with player orientated E", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.N }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.rotateCCW(state);
+
+        expect(result.player.orientation).toEqual(Orientation.W);
+      });
+    });
+    describe("when player is orientated S", () => {
+      it("should update game state with player orientated E", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.S }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.rotateCCW(state);
+
+        expect(result.player.orientation).toEqual(Orientation.E);
+      });
+    });
+    describe("when player is orientated E", () => {
+      it("should update game state with player orientated N", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.E }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.rotateCCW(state);
+
+        expect(result.player.orientation).toEqual(Orientation.N);
+      });
+    });
+    describe("when player is orientated W", () => {
+      it("should update game state with player orientated S", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.W }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.rotateCCW(state);
+
+        expect(result.player.orientation).toEqual(Orientation.S);
+      });
+    });
+  });
+
+  describe("GameState - rotateOrientation", () => {
+    describe("when provided with an orientation", () => {
+      it("should update the game state with player in that orientation", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.W }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.rotateOrientation(state, Orientation.S);
+
+        expect(result.player.orientation).toEqual(Orientation.S);
+      });
+    });
+  });
+
+  describe("GameState - moveOrientation", () => {
+    describe("when player is already in the desired orientation", () => {
+      it("should update the game state with the player moving forward", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.W }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.moveOrientation(state, Orientation.W);
+
+        expect(result.player.orientation).toEqual(Orientation.W);
+        expect(result.player.position).toEqual([4, 5]);
+      });
+    });
+    describe("when the player is not in the desired orientation", () => {
+      it("should update the game state with the player in the desired orientation without moving them forward", () => {
+        const state = new GameState({
+          dimensions: [10, 10],
+          player: new Player({ position: [5, 5], orientation: Orientation.W }),
+          obstacles: new Map(),
+          flags: new Map(),
+        });
+
+        const result = GameState.moveOrientation(state, Orientation.N);
+
+        expect(result.player.orientation).toEqual(Orientation.N);
+        expect(result.player.position).toEqual([5, 5]);
+      });
+    });
+  });
 });
