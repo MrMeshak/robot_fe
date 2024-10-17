@@ -1,5 +1,4 @@
 import GameCard from "@/components/game/gameCard";
-import * as React from "react";
 
 export interface IGamePageProps {}
 
