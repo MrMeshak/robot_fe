@@ -26,7 +26,7 @@ export default function GameBoard(_props: IGameBoardProps) {
                 <div className="flex aspect-square w-[calc(2rem+1vw)] items-center justify-center border-l-2 last:border-r-2">
                   <Bug
                     className={cn(
-                      "w-full",
+                      "w-full text-orange-500",
                       cell.orientation === Orientation.N && "rotate-0",
                       cell.orientation === Orientation.S && "rotate-180",
                       cell.orientation === Orientation.E && "rotate-90",
